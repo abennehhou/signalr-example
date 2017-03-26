@@ -19,5 +19,15 @@ namespace SignalR.Example
         {
             return _quoteTicker.GetCurrentQuote();
         }
+
+        public int GetQuotesNumber()
+        {
+            return _quoteTicker.GetQuotesNumber();
+        }
+
+        public void AddQuote(string owner, string text)
+        {
+            _quoteTicker.AddQuote(owner, text);
+        }
     }
 }

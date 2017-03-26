@@ -13,7 +13,7 @@ namespace SignalR.Example
         private readonly List<Quote> _quotes = new List<Quote>();
         private readonly Quote _currentQuote = new Quote();
 
-        private readonly object _updateCurrentQuoteLock = new object();
+        private readonly object _quoteLock = new object();
 
         private readonly TimeSpan _updateInterval = TimeSpan.FromSeconds(5);
         private readonly Random _random = new Random();
@@ -48,9 +48,27 @@ namespace SignalR.Example
             return _currentQuote;
         }
 
+        public int GetQuotesNumber()
+        {
+            return _quotes.Count;
+        }
+
+        public void AddQuote(string owner, string text)
+        {
+            lock (_quoteLock)
+            {
+                _quotes.Add(new Quote
+                {
+                    Text = text,
+                    Owner = owner
+                });
+                BroadcastCurrentQuotesNumber(_quotes.Count);
+            }
+        }
+
         private void UpdateCurrentQuote(object state)
         {
-            lock (_updateCurrentQuoteLock)
+            lock (_quoteLock)
             {
                 if (!_updatingQuotes)
                 {
@@ -69,6 +87,11 @@ namespace SignalR.Example
         private void BroadcastCurrentQuote(Quote quote)
         {
             Clients.All.updateCurrentQuote(quote);
+        }
+
+        private void BroadcastCurrentQuotesNumber(int number)
+        {
+            Clients.All.updateQuotesNumber(number);
         }
 
         private List<Quote> InitializeQuotes()

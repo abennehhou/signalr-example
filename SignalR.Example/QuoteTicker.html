@@ -6,14 +6,30 @@
 </head>
 <body>
     <div class="container">
-        <h1>SignalR Quote Ticker Sample</h1>
+        <h1>Quotes <span span id="quotes-number" class="label label-primary"></span></h1>
         <div class="panel panel-info">
-            <div class="panel-heading">Random quote!</div>
+            <div class="panel-heading">Random quote</div>
             <div class="panel-body">
                 <blockquote>
-                    <p id="quoteText">Loading...</p>
-                    <footer id="quoteOwner">Loading...</footer>
+                    <p id="quote-text">Loading...</p>
+                    <footer id="quote-owner">Loading...</footer>
                 </blockquote>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">Your quote</div>
+            <div class="panel-body">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label for="user-name">Owner</label>
+                        <input type="text" id="user-name" class="form-control" readonly="readonly" placeholder="Jon Doe" />
+                    </div>
+                    <div class="form-group">
+                        <label for="user-quote">Quote</label>
+                        <input type="text" id="user-quote" class="form-control" placeholder="Enter your words" />
+                    </div>
+                    <input type="button" id="send-message-btn" class="btn btn-primary" value="Send">
+                </form>
             </div>
         </div>
     </div>
